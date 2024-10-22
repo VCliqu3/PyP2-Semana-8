@@ -12,9 +12,6 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: c73a287de9d25a44fa4b3174f65ed7a0
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
-    guid: 9fc0d4010bbf28b4594072e72b8655ab
-  - enabled: 1
     path: Assets/Scenes/Defeat.unity
     guid: 7e09115909bc0e54a8d9570c6ab9b649
   - enabled: 1
