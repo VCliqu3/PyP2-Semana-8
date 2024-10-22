@@ -26,11 +26,13 @@ public class FishManager : MonoBehaviour
     private void OnEnable()
     {
         FishHandler.OnFishCollected += FishHandler_OnFishCollected;
+        Citizen.OnAnyFishConsumption += Citizen_OnAnyFishConsumption;
     }
 
     private void OnDisable()
     {
         FishHandler.OnFishCollected -= FishHandler_OnFishCollected;
+        Citizen.OnAnyFishConsumption -= Citizen_OnAnyFishConsumption;
     }
 
     private void Awake()
@@ -80,6 +82,13 @@ public class FishManager : MonoBehaviour
     private void FishHandler_OnFishCollected(object sender, FishHandler.OnFishEventArgs e)
     {
         AddFish(GameManager.Instance.GameSettings.fishQuantityPerFish);
+    }
+    #endregion
+
+    #region Citizen Subscriptions
+    private void Citizen_OnAnyFishConsumption(object sender, Citizen.OnAnyCitizenConsumptionEventArgs e)
+    {
+        ReduceFish(e.quantity);
     }
     #endregion
 }

@@ -11,6 +11,9 @@ public class HarvestSpawnerManager : MonoBehaviour
     [SerializeField] private Transform harvestPrefab;
     [SerializeField] private List<HarvestSpawnPosition> harvestSpawnPositions;
 
+    [Header("Settings")]
+    [SerializeField] private Vector3 spawnOffset;
+
     private float timer = 0f;
 
     public static event EventHandler OnHarvestNotSpawned;
@@ -89,7 +92,7 @@ public class HarvestSpawnerManager : MonoBehaviour
         HarvestSpawnPosition chosenSpawnPosition = ChooseRandomHarvestSpawnPosition(availablePositions);
 
         Transform harvestTransform = Instantiate(harvestPrefab, chosenSpawnPosition.harvestPosition);
-        harvestTransform.localPosition = Vector3.zero;
+        harvestTransform.localPosition = spawnOffset;
 
         chosenSpawnPosition.harvestTransform = harvestTransform;
 

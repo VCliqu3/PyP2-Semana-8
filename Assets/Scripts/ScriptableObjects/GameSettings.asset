@@ -25,7 +25,10 @@ MonoBehaviour:
   fishProductionPerSecondPerCitizen: 0.025
   harvestsProductionPerSecondPerCitizen: 0.0368
   mineralsProductionPerSecondPerCitizen: 0.015
-  meatComsumptionPerSecondPerCitizen: 0.05
-  fishComsumptionPerSecondPerCitizen: 0.05
-  harvestsComsumptionPerSecondPerCitizen: 0.05
-  mineralsComsumptionPerSecondPerCitizen: 0.05
+  citizenMinConsumptionTime: 10
+  citizenMaxConsumptionTime: 15
+  meatConsumptionOdds: 0.5
+  fishConsumptionOdds: 0.5
+  harvestConsumptionOdds: 0.5
+  minCitizenConsumptionQuantity: 1
+  maxCitizenConsumptionQuantity: 3

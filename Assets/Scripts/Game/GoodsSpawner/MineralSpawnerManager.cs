@@ -11,6 +11,9 @@ public class MineralSpawnerManager : MonoBehaviour
     [SerializeField] private Transform mineralPrefab;
     [SerializeField] private List<MineralSpawnPosition> mineralSpawnPositions;
 
+    [Header("Settings")]
+    [SerializeField] private Vector3 spawnOffset;
+
     private float timer = 0f;
 
     public static event EventHandler OnMineralNotSpawned;
@@ -89,7 +92,7 @@ public class MineralSpawnerManager : MonoBehaviour
         MineralSpawnPosition chosenSpawnPosition = ChooseRandomMineralSpawnPosition(availablePositions);
 
         Transform mineralTransform = Instantiate(mineralPrefab, chosenSpawnPosition.mineralPosition);
-        mineralTransform.localPosition = Vector3.zero;
+        mineralTransform.localPosition = spawnOffset;
 
         chosenSpawnPosition.mineralTransform = mineralTransform;
 

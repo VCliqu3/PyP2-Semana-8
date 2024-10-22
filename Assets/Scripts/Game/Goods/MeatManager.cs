@@ -26,11 +26,13 @@ public class MeatManager : MonoBehaviour
     private void OnEnable()
     {
         MeatHandler.OnMeatCollected += MeatHandler_OnMeatCollected;
+        Citizen.OnAnyMeatConsumption += Citizen_OnAnyMeatConsumption;
     }
 
     private void OnDisable()
     {
         MeatHandler.OnMeatCollected -= MeatHandler_OnMeatCollected;
+        Citizen.OnAnyMeatConsumption -= Citizen_OnAnyMeatConsumption;
     }
 
     private void Awake()
@@ -82,5 +84,12 @@ public class MeatManager : MonoBehaviour
         AddMeat(GameManager.Instance.GameSettings.meatQuantityPerMeat);
     }
 
+    #endregion
+
+    #region CitizenSubscriptions
+    private void Citizen_OnAnyMeatConsumption(object sender, Citizen.OnAnyCitizenConsumptionEventArgs e)
+    {
+        ReduceMeat(e.quantity);
+    }
     #endregion
 }

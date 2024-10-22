@@ -12,6 +12,9 @@ public class MeatSpawnerManager : MonoBehaviour
     [SerializeField] private Transform meatPrefab;
     [SerializeField] private List<MeatSpawnPosition> meatSpawnPositions;
 
+    [Header("Settings")]
+    [SerializeField] private Vector3 spawnOffset;
+
     private float timer = 0f;
 
     public static event EventHandler OnMeatNotSpawned;
@@ -90,7 +93,7 @@ public class MeatSpawnerManager : MonoBehaviour
         MeatSpawnPosition chosenSpawnPosition = ChooseRandomMeatSpawnPosition(availablePositions);
 
         Transform meatTransform = Instantiate(meatPrefab, chosenSpawnPosition.meatPosition);
-        meatTransform.localPosition = Vector3.zero;
+        meatTransform.localPosition = spawnOffset;
 
         chosenSpawnPosition.meatTransform = meatTransform;
 

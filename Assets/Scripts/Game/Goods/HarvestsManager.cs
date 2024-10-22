@@ -27,11 +27,13 @@ public class HarvestsManager : MonoBehaviour
     private void OnEnable()
     {
         HarvestHandler.OnHarvestCollected += HarvestHandler_OnHarvestCollected;
+        Citizen.OnAnyHarvestConsumption += Citizen_OnAnyHarvestConsumption;
     }
 
     private void OnDisable()
     {
         HarvestHandler.OnHarvestCollected -= HarvestHandler_OnHarvestCollected;
+        Citizen.OnAnyHarvestConsumption -= Citizen_OnAnyHarvestConsumption;
     }
 
     private void Awake()
@@ -82,6 +84,13 @@ public class HarvestsManager : MonoBehaviour
     private void HarvestHandler_OnHarvestCollected(object sender, HarvestHandler.OnHarvestEventArgs e)
     {
         AddHarvests(GameManager.Instance.GameSettings.harvestQuantityPerHarvest);
+    }
+    #endregion
+
+    #region Citizen Subscriptions
+    private void Citizen_OnAnyHarvestConsumption(object sender, Citizen.OnAnyCitizenConsumptionEventArgs e)
+    {
+        ReduceHarvests(e.quantity);
     }
     #endregion
 }

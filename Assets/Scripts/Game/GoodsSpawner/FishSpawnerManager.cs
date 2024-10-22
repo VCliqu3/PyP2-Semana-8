@@ -12,6 +12,9 @@ public class FishSpawnerManager : MonoBehaviour
     [SerializeField] private Transform fishPrefab;
     [SerializeField] private List<FishSpawnPosition> fishSpawnPositions;
 
+    [Header("Settings")]
+    [SerializeField] private Vector3 spawnOffset;
+
     private float timer = 0f;
 
     public static event EventHandler OnFishNotSpawned;
@@ -89,7 +92,7 @@ public class FishSpawnerManager : MonoBehaviour
         FishSpawnPosition chosenSpawnPosition = ChooseRandomFishSpawnPosition(availablePositions);
 
         Transform fishTransform = Instantiate(fishPrefab, chosenSpawnPosition.fishPosition);
-        fishTransform.localPosition = Vector3.zero;
+        fishTransform.localPosition = spawnOffset;
 
         chosenSpawnPosition.fishTransform = fishTransform;
 
