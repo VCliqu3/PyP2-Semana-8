@@ -29,6 +29,16 @@ public class HarvestSpawnerManager : MonoBehaviour
         public Transform harvestTransform;
     }
 
+    private void OnEnable()
+    {
+        HarvestHandler.OnHarvestCollected += HarvestHandler_OnHarvestCollected;
+    }
+
+    private void OnDisable()
+    {
+        HarvestHandler.OnHarvestCollected -= HarvestHandler_OnHarvestCollected;
+    }
+
     private void Awake()
     {
         SetSingleton();
@@ -76,7 +86,7 @@ public class HarvestSpawnerManager : MonoBehaviour
             return false;
         }
 
-        HarvestSpawnPosition chosenSpawnPosition = availablePositions[0];
+        HarvestSpawnPosition chosenSpawnPosition = ChooseRandomHarvestSpawnPosition(availablePositions);
 
         Transform harvestTransform = Instantiate(harvestPrefab, chosenSpawnPosition.harvestPosition);
         harvestTransform.localPosition = Vector3.zero;
@@ -85,6 +95,12 @@ public class HarvestSpawnerManager : MonoBehaviour
 
         OnHarvestSpawned?.Invoke(this, new OnHarvestSpawnEventArgs { harvestTransform = harvestTransform });
         return true;
+    }
+
+    private HarvestSpawnPosition ChooseRandomHarvestSpawnPosition(List<HarvestSpawnPosition> harvestSpawnPositions)
+    {
+        int randomIndex = UnityEngine.Random.Range(0, harvestSpawnPositions.Count);
+        return harvestSpawnPositions[randomIndex];
     }
 
     public bool DespawnHarvest(Transform harvestTransform)
@@ -124,4 +140,12 @@ public class HarvestSpawnerManager : MonoBehaviour
 
     private void ResetTimer() => timer = 0f;
     private bool TimerOnCooldown() => timer < CalculateTimeToSpawn();
+
+    #region HarvestHandler Subscriptions
+    private void HarvestHandler_OnHarvestCollected(object sender, HarvestHandler.OnHarvestEventArgs e)
+    {
+        DespawnHarvest(e.harvest.GetTransform());
+    }
+
+    #endregion
 }

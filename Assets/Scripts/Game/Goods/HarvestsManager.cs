@@ -20,17 +20,18 @@ public class HarvestsManager : MonoBehaviour
 
     public class OnHarvestsEventArgs : EventArgs
     {
+        public int quantity;
         public int harvests;
     }
 
     private void OnEnable()
     {
-
+        HarvestHandler.OnHarvestCollected += HarvestHandler_OnHarvestCollected;
     }
 
     private void OnDisable()
     {
-
+        HarvestHandler.OnHarvestCollected -= HarvestHandler_OnHarvestCollected;
     }
 
     private void Awake()
@@ -59,21 +60,28 @@ public class HarvestsManager : MonoBehaviour
     private void InitializeVariables()
     {
         harvests = GameManager.Instance.GameSettings.startingHarvests;
-        OnHarvestsInitialized?.Invoke(this, new OnHarvestsEventArgs { harvests = harvests });   
+        OnHarvestsInitialized?.Invoke(this, new OnHarvestsEventArgs { quantity = 0, harvests = harvests });   
     }
 
     public void AddHarvests(int quantity)
     {
         harvests += quantity;
-        OnHarvestsIncreased?.Invoke(this, new OnHarvestsEventArgs { harvests = harvests });
+        OnHarvestsIncreased?.Invoke(this, new OnHarvestsEventArgs { quantity = quantity, harvests = harvests });
     }
 
     public void ReduceHarvests(int quantity)
     {
         harvests = harvests - quantity < 0 ? 0 : harvests - quantity;
 
-        OnHarvestsDecreased?.Invoke(this, new OnHarvestsEventArgs { harvests = harvests });
+        OnHarvestsDecreased?.Invoke(this, new OnHarvestsEventArgs { quantity = quantity, harvests = harvests });
 
-        if (harvests <= 0) OnHarvestsReachZero?.Invoke(this, new OnHarvestsEventArgs { harvests = harvests });
+        if (harvests <= 0) OnHarvestsReachZero?.Invoke(this, new OnHarvestsEventArgs { quantity = 0, harvests = harvests });
     }
+
+    #region HarvestHandler Subcriptions
+    private void HarvestHandler_OnHarvestCollected(object sender, HarvestHandler.OnHarvestEventArgs e)
+    {
+        AddHarvests(GameManager.Instance.GameSettings.harvestQuantityPerHarvest);
+    }
+    #endregion
 }

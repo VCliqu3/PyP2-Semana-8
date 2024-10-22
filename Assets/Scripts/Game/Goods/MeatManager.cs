@@ -19,17 +19,18 @@ public class MeatManager : MonoBehaviour
 
     public class OnMeatEventArgs : EventArgs
     {
+        public int quantity;
         public int meat;
     }
 
     private void OnEnable()
     {
-        
+        MeatHandler.OnMeatCollected += MeatHandler_OnMeatCollected;
     }
 
     private void OnDisable()
     {
-        
+        MeatHandler.OnMeatCollected -= MeatHandler_OnMeatCollected;
     }
 
     private void Awake()
@@ -58,20 +59,28 @@ public class MeatManager : MonoBehaviour
     private void InitializeVariables()
     {
         meat = GameManager.Instance.GameSettings.startingMeat;
-        OnMeatInitialized?.Invoke(this , new OnMeatEventArgs { meat = meat});
+        OnMeatInitialized?.Invoke(this , new OnMeatEventArgs { quantity = 0, meat = meat});
     }
 
     public void AddMeat(int quantity) 
     {
         meat += quantity;
-        OnMeatIncreased?.Invoke(this, new OnMeatEventArgs { meat = meat });
+        OnMeatIncreased?.Invoke(this, new OnMeatEventArgs { quantity = quantity, meat = meat });
     }
 
     public void ReduceMeat(int quantity)
     {
         meat = meat -quantity <0 ? 0 : meat -quantity;
-        OnMeatDecreased?.Invoke(this, new OnMeatEventArgs { meat = meat });
+        OnMeatDecreased?.Invoke(this, new OnMeatEventArgs { quantity = quantity, meat = meat });
 
-        if (meat<=0) OnMeatReachZero?.Invoke(this, new OnMeatEventArgs { meat = meat });
+        if (meat<=0) OnMeatReachZero?.Invoke(this, new OnMeatEventArgs { quantity = 0, meat = meat });
     }
+
+    #region MeatHandler Subscriptions
+    private void MeatHandler_OnMeatCollected(object sender, MeatHandler.OnMeatEventArgs e)
+    {
+        AddMeat(GameManager.Instance.GameSettings.meatQuantityPerMeat);
+    }
+
+    #endregion
 }

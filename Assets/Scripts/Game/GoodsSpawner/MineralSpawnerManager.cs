@@ -29,6 +29,16 @@ public class MineralSpawnerManager : MonoBehaviour
         public Transform mineralTransform;
     }
 
+    private void OnEnable()
+    {
+        MineralHandler.OnMineralCollected += MineralHandler_OnMineralCollected;
+    }
+
+    private void OnDisable()
+    {
+        MineralHandler.OnMineralCollected -= MineralHandler_OnMineralCollected;
+    }
+
     private void Awake()
     {
         SetSingleton();
@@ -76,7 +86,7 @@ public class MineralSpawnerManager : MonoBehaviour
             return false;
         }
 
-        MineralSpawnPosition chosenSpawnPosition = availablePositions[0];
+        MineralSpawnPosition chosenSpawnPosition = ChooseRandomMineralSpawnPosition(availablePositions);
 
         Transform mineralTransform = Instantiate(mineralPrefab, chosenSpawnPosition.mineralPosition);
         mineralTransform.localPosition = Vector3.zero;
@@ -85,6 +95,12 @@ public class MineralSpawnerManager : MonoBehaviour
 
         OnMineralSpawned?.Invoke(this, new OnMineralSpawnEventArgs { mineralTransform = mineralTransform });
         return true;
+    }
+
+    private MineralSpawnPosition ChooseRandomMineralSpawnPosition(List<MineralSpawnPosition> mineralSpawnPositions)
+    {
+        int randomIndex = UnityEngine.Random.Range(0, mineralSpawnPositions.Count);
+        return mineralSpawnPositions[randomIndex];
     }
 
     public bool DespawnMineral(Transform mineralTransform)
@@ -124,4 +140,11 @@ public class MineralSpawnerManager : MonoBehaviour
 
     private void ResetTimer() => timer = 0f;
     private bool TimerOnCooldown() => timer < CalculateTimeToSpawn();
+
+    #region MineralHandler Subscriptions
+    private void MineralHandler_OnMineralCollected(object sender, MineralHandler.OnMineralEventArgs e)
+    {
+        DespawnMineral(e.mineral.GetTransform());
+    }
+    #endregion
 }
