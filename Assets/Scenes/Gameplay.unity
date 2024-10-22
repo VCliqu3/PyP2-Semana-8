@@ -13869,7 +13869,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be2f12c85f48a5a45b4c3116705b9565, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nextScene: Victory
+  victoryScene: Victory
   defeatScene: Defeat
   gameSettingsSO: {fileID: 11400000, guid: f8898bca334b6d845b63990d67192451, type: 2}
 --- !u!1001 &1107542665

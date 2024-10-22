@@ -31,4 +31,8 @@ public class GameSettingsSO : ScriptableObject
     [Space]
     [Range(1f, 2f)] public int minCitizenConsumptionQuantity;
     [Range(2f, 3f)] public int maxCitizenConsumptionQuantity;
+    [Space]
+    [Range(105, 200)] public int meatToWin;
+    [Range(105, 200)] public int fishToWin;
+    [Range(105, 200)] public int harvestToWin;
 }
