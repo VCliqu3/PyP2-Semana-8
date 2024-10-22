@@ -7,12 +7,17 @@ public class MineralUI : MonoBehaviour
 {
     [Header("Components")]
     [SerializeField] private TextMeshProUGUI mineralQuantityText;
+    [SerializeField] private Animator mineralBoxAnimator;
+
+    private const string CANT_AFFORD_TRIGGER = "CantAfford";
 
     private void OnEnable()
     {
         MineralsManager.OnMineralsInitialized += MineralsManager_OnMineralsInitialized;
         MineralsManager.OnMineralsIncreased += MineralsManager_OnMineralsIncreased;
         MineralsManager.OnMineralsDecreased += MineralsManager_OnMineralsDecreased;
+
+        CitizensManager.OnCantAffordCitizen += CitizensManager_OnCantAffordCitizen;
     }
 
     private void OnDisable()
@@ -20,6 +25,23 @@ public class MineralUI : MonoBehaviour
         MineralsManager.OnMineralsInitialized -= MineralsManager_OnMineralsInitialized;
         MineralsManager.OnMineralsIncreased -= MineralsManager_OnMineralsIncreased;
         MineralsManager.OnMineralsDecreased -= MineralsManager_OnMineralsDecreased;
+
+        CitizensManager.OnCantAffordCitizen -= CitizensManager_OnCantAffordCitizen;
+    }
+
+    private void Start()
+    {
+        NewMethod();
+    }
+
+    private void NewMethod()
+    {
+        mineralBoxAnimator.ResetTrigger(CANT_AFFORD_TRIGGER);
+    }
+
+    private void CantAffordBlink()
+    {
+        mineralBoxAnimator.SetTrigger(CANT_AFFORD_TRIGGER);
     }
 
     private void UpdateMineralsQuantityText(int quantity) => mineralQuantityText.text = quantity.ToString();
@@ -38,6 +60,13 @@ public class MineralUI : MonoBehaviour
     private void MineralsManager_OnMineralsDecreased(object sender, MineralsManager.OnMineralsEventArgs e)
     {
         UpdateMineralsQuantityText(e.minerals);
+    }
+    #endregion
+
+    #region CitizenManager Subscriptions
+    private void CitizensManager_OnCantAffordCitizen(object sender, System.EventArgs e)
+    {
+        CantAffordBlink();
     }
     #endregion
 }

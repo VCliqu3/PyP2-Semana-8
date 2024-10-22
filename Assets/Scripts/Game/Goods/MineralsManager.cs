@@ -88,7 +88,7 @@ public class MineralsManager : MonoBehaviour
     #endregion
 
     #region CitizensManagerSubscriptions
-    private void CitizensManager_OnCitizenBought(object sender, EventArgs e)
+    private void CitizensManager_OnCitizenBought(object sender, CitizensManager.OnCitizenBoughtEventArgs e)
     {
         ReduceMinerals(GameManager.Instance.GameSettings.citizenMineralPrice);
     }

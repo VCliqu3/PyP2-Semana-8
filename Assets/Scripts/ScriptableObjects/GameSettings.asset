@@ -14,22 +14,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startingCitizens: 3
   citizenMineralPrice: 15
-  startingMeat: 30
-  startingFish: 20
-  startingHarvests: 35
-  startingMinerals: 25
+  startingMeat: 90
+  startingFish: 90
+  startingHarvests: 90
+  startingMinerals: 90
   meatQuantityPerMeat: 1
   fishQuantityPerFish: 1
   harvestQuantityPerHarvest: 1
   mineralQuantityPerMineral: 1
-  meatProductionPerSecondPerCitizen: 0.05
-  fishProductionPerSecondPerCitizen: 0.025
-  harvestsProductionPerSecondPerCitizen: 0.0368
-  mineralsProductionPerSecondPerCitizen: 0.015
-  citizenMinConsumptionTime: 10
-  citizenMaxConsumptionTime: 15
-  meatConsumptionOdds: 0.5
-  fishConsumptionOdds: 0.5
-  harvestConsumptionOdds: 0.5
+  meatProductionPerSecondPerCitizen: 0.15
+  fishProductionPerSecondPerCitizen: 0.1114
+  harvestsProductionPerSecondPerCitizen: 0.1335
+  mineralsProductionPerSecondPerCitizen: 0.0681
+  citizenMinConsumptionTime: 15
+  citizenMaxConsumptionTime: 30
+  meatConsumptionOdds: 1
+  fishConsumptionOdds: 0.665
+  harvestConsumptionOdds: 0.837
   minCitizenConsumptionQuantity: 1
   maxCitizenConsumptionQuantity: 3

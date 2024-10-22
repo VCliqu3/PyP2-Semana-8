@@ -81,6 +81,7 @@ GameObject:
   - component: {fileID: 7423070482007345926}
   - component: {fileID: 1381946255456753890}
   - component: {fileID: 2563357008654810713}
+  - component: {fileID: 4173327519283917049}
   m_Layer: 0
   m_Name: Visual
   m_TagString: Untagged
@@ -151,6 +152,22 @@ MonoBehaviour:
   citizen: {fileID: 2477181405273823303}
   feedbackPrefab: {fileID: 4842289556859963170, guid: efb06b73b52fce74da98d84b06b2389b, type: 3}
   harvestSprite: {fileID: 21300000, guid: de3329a7ac72eac47aa2606e1c0963fe, type: 3}
+  offset: {x: 0, y: 1.5, z: 0}
+--- !u!114 &4173327519283917049
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2525073159548397491}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 096056016abd5a145bb8d8a2768dceb5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  citizen: {fileID: 2477181405273823303}
+  feedbackPrefab: {fileID: 4842289556859963170, guid: efb06b73b52fce74da98d84b06b2389b, type: 3}
+  mineralSprite: {fileID: 21300000, guid: 9e361246115d10a4c95ab564bb0d3d3b, type: 3}
   offset: {x: 0, y: 1.5, z: 0}
 --- !u!1001 &8681741662926232637
 PrefabInstance:

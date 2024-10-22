@@ -18,13 +18,13 @@ public class GameSettingsSO : ScriptableObject
     [Range(0, 10)] public int harvestQuantityPerHarvest;
     [Range(0, 10)] public int mineralQuantityPerMineral;
     [Space]
-    [Range(0f,0.05f)] public float meatProductionPerSecondPerCitizen;
-    [Range(0f,0.05f)] public float fishProductionPerSecondPerCitizen;
-    [Range(0f,0.05f)] public float harvestsProductionPerSecondPerCitizen;
-    [Range(0f,0.05f)] public float mineralsProductionPerSecondPerCitizen;
+    [Range(0f,0.15f)] public float meatProductionPerSecondPerCitizen;
+    [Range(0f,0.15f)] public float fishProductionPerSecondPerCitizen;
+    [Range(0f,0.15f)] public float harvestsProductionPerSecondPerCitizen;
+    [Range(0f,0.15f)] public float mineralsProductionPerSecondPerCitizen;
     [Space]
-    [Range(5f, 10f)] public float citizenMinConsumptionTime;
-    [Range(10f, 15f)] public float citizenMaxConsumptionTime;
+    [Range(10f, 15f)] public float citizenMinConsumptionTime;
+    [Range(25f, 30f)] public float citizenMaxConsumptionTime;
     [Range(0f, 1f)] public float meatConsumptionOdds;
     [Range(0f, 1f)] public float fishConsumptionOdds;
     [Range(0f, 1f)] public float harvestConsumptionOdds;

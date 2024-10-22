@@ -13,6 +13,8 @@ public class Citizen : MonoBehaviour
     public event EventHandler<OnCitizenConsumptionEventArgs> OnFishConsumption;
     public event EventHandler<OnCitizenConsumptionEventArgs> OnHarvestConsumption;
 
+    public event EventHandler OnCitizenBought;
+
     private float consumptionTimer;
     private float timer;
 
@@ -37,6 +39,8 @@ public class Citizen : MonoBehaviour
     {
         HandleGoodsConsumption();
     }
+
+    public void SetWasBought() => OnCitizenBought?.Invoke(this, EventArgs.Empty);
 
     private void HandleGoodsConsumption()
     {
