@@ -8,8 +8,6 @@ public interface IInteractable
 
     public event EventHandler OnObjectInteracted;
 
-    public string TooltipMessage { get; }
-
     public void Select();
     public void Deselect();
     public void Interact();

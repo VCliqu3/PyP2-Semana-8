@@ -69,7 +69,12 @@ public class CitizensManager : MonoBehaviour
         }
     }
 
-    private void AddCitizen() => CitizenSpawnerManager.Instance.SpawnCitizen();
+    private void AddCitizen()
+    {
+        bool added = CitizenSpawnerManager.Instance.SpawnCitizen();
+
+        if (!added) OnCitizenNotAdded?.Invoke(this, EventArgs.Empty);
+    }
 
     private void RemoveCitizen(Citizen citizen)=> CitizenSpawnerManager.Instance.DespawnCitizen(citizen.transform);
 
@@ -79,7 +84,8 @@ public class CitizensManager : MonoBehaviour
 
         if (citizen == null) return;
 
-        citizenList.Add(citizen);   
+        citizenList.Add(citizen); 
+        OnCitizenAdded?.Invoke(this, new OnCitizenEventArgs { citizen = citizen });
     }
 
     private void RemoveCitizenFromList(Transform citizenTransform)
@@ -89,6 +95,7 @@ public class CitizensManager : MonoBehaviour
         if (citizen == null) return;
 
         citizenList.Remove(citizen);
+        OnCitizenRemoved?.Invoke(this, new OnCitizenEventArgs { citizen = citizen });
     }
 
     #region CitizenSpawnerManager Subscriptions

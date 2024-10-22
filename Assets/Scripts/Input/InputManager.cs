@@ -39,22 +39,14 @@ public class InputManager : MonoBehaviour
         return true;
     }
 
-    public Vector2 GetMovementVectorNormalized()
-    {
-        if (!CanProcessInput()) return Vector2.zero;
 
-        Vector2 inputVector = playerInputActions.Player.Move.ReadValue<Vector2>();
-        inputVector.Normalize();
-        return inputVector;
-    }
-
-    public bool GetFireInput()
+    public bool GetInteractionInputDown()
     {
         if (!CanProcessInput()) return false;
 
-        bool fire = playerInputActions.Player.Fire.IsPressed();
+        bool interact = playerInputActions.Player.Interact.WasPerformedThisFrame();
 
-        return fire;
+        return interact;
     }
 
     public Vector3 GetWorldMousePosition() => Camera.main.ScreenToWorldPoint(Input.mousePosition);
