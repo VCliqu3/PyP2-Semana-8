@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static MineralsManager;
 
 public class HarvestsManager : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class HarvestsManager : MonoBehaviour
 
     public int Harvests => harvests;
 
+    public static event EventHandler<OnHarvestsEventArgs> OnHarvestIncreased;
+    public static event EventHandler<OnHarvestsEventArgs> OnHarvestsDecreased;
     public static event EventHandler<OnHarvestsEventArgs> OnHarvestsReachZero;
 
     public class OnHarvestsEventArgs : EventArgs
@@ -58,11 +61,17 @@ public class HarvestsManager : MonoBehaviour
         harvests = gameSettingsSO.startingHarvests;
     }
 
-    public void AddHarvests(int quantity) => harvests += quantity;
+    public void AddHarvests(int quantity)
+    {
+        harvests += quantity;
+        OnHarvestIncreased?.Invoke(this, new OnHarvestsEventArgs { harvests = harvests });
+    }
 
     public void ReduceHarvests(int quantity)
     {
         harvests = harvests - quantity < 0 ? 0 : harvests - quantity;
+
+        OnHarvestsDecreased?.Invoke(this, new OnHarvestsEventArgs { harvests = harvests });
 
         if (harvests <= 0) OnHarvestsReachZero?.Invoke(this, new OnHarvestsEventArgs { harvests = harvests });
     }

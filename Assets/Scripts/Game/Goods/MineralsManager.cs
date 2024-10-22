@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static MeatManager;
+using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
 
 public class MineralsManager : MonoBehaviour
 {
@@ -13,6 +15,8 @@ public class MineralsManager : MonoBehaviour
 
     public int Minerals => minerals;
 
+    public static event EventHandler<OnMineralsEventArgs> OnMineralsIncreased;
+    public static event EventHandler<OnMineralsEventArgs> OnMineralsDecreased;
     public static event EventHandler<OnMineralsEventArgs> OnMineralsReachZero;
 
     public class OnMineralsEventArgs : EventArgs
@@ -58,11 +62,16 @@ public class MineralsManager : MonoBehaviour
         minerals = gameSettingsSO.startingMinerals;
     }
 
-    public void AddMinerals(int quantity) => minerals += quantity;
+    public void AddMinerals(int quantity)
+    {
+        minerals += quantity;
+        OnMineralsIncreased?.Invoke(this, new OnMineralsEventArgs { minerals = minerals });
+    }
 
     public void ReduceMinerals(int quantity)
     {
         minerals = minerals - quantity < 0 ? 0 : minerals - quantity;
+        OnMineralsDecreased?.Invoke(this, new OnMineralsEventArgs { minerals = minerals });
 
         if (minerals <= 0) OnMineralsReachZero?.Invoke(this, new OnMineralsEventArgs { minerals = minerals });
     }
