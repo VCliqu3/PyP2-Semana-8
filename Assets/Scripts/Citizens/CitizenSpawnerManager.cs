@@ -10,7 +10,6 @@ public class CitizenSpawnerManager : MonoBehaviour
     [Header("Components")]
     [SerializeField] private Transform citizenPrefab;
     [SerializeField] private List<CitizenSpawnPosition> citizenSpawnPositions;
-    [SerializeField] private GameSettingsSO gameSettings;
 
     public static event EventHandler OnCitizenNotSpawned;
     public static event EventHandler<OnCitizenSpawnEventArgs> OnCitizenSpawned;

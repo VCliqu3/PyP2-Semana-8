@@ -250,7 +250,6 @@ MonoBehaviour:
     citizenTransform: {fileID: 0}
   - citizenPosition: {fileID: 1069797432}
     citizenTransform: {fileID: 0}
-  gameSettings: {fileID: 11400000, guid: f8898bca334b6d845b63990d67192451, type: 2}
 --- !u!1 &99868080
 GameObject:
   m_ObjectHideFlags: 0
@@ -995,6 +994,9 @@ GameObject:
   m_Component:
   - component: {fileID: 514598217}
   - component: {fileID: 514598218}
+  - component: {fileID: 514598219}
+  - component: {fileID: 514598220}
+  - component: {fileID: 514598221}
   m_Layer: 0
   m_Name: GoodsSpawnerManager
   m_TagString: Untagged
@@ -1029,7 +1031,122 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88716e4acf389794eb7f388a209f3758, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameSettings: {fileID: 0}
+  meatPrefab: {fileID: 8014917462395333674, guid: db5d1010a7e90ba45a391bbc74f92402, type: 3}
+  meatSpawnPositions:
+  - meatPosition: {fileID: 888928234}
+    meatTransform: {fileID: 0}
+  - meatPosition: {fileID: 1513600152}
+    meatTransform: {fileID: 0}
+  - meatPosition: {fileID: 1638391724}
+    meatTransform: {fileID: 0}
+  - meatPosition: {fileID: 1897006501}
+    meatTransform: {fileID: 0}
+  - meatPosition: {fileID: 1777400403}
+    meatTransform: {fileID: 0}
+  - meatPosition: {fileID: 1422781637}
+    meatTransform: {fileID: 0}
+  - meatPosition: {fileID: 1815056733}
+    meatTransform: {fileID: 0}
+  - meatPosition: {fileID: 2025588929}
+    meatTransform: {fileID: 0}
+  - meatPosition: {fileID: 958432276}
+    meatTransform: {fileID: 0}
+--- !u!114 &514598219
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 514598216}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a9b1302346140b4db6c5ec1ae73b215, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fishPrefab: {fileID: 8014917462395333674, guid: bb0b22e733d045d478bd6929032c37ae, type: 3}
+  fishSpawnPositions:
+  - fishPosition: {fileID: 909532746}
+    fishTransform: {fileID: 0}
+  - fishPosition: {fileID: 766711827}
+    fishTransform: {fileID: 0}
+  - fishPosition: {fileID: 504704023}
+    fishTransform: {fileID: 0}
+  - fishPosition: {fileID: 506089940}
+    fishTransform: {fileID: 0}
+  - fishPosition: {fileID: 99868081}
+    fishTransform: {fileID: 0}
+  - fishPosition: {fileID: 662868725}
+    fishTransform: {fileID: 0}
+  - fishPosition: {fileID: 787863890}
+    fishTransform: {fileID: 0}
+  - fishPosition: {fileID: 166876692}
+    fishTransform: {fileID: 0}
+  - fishPosition: {fileID: 831678525}
+    fishTransform: {fileID: 0}
+--- !u!114 &514598220
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 514598216}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2124db00a2138c49aaa0b1734834860, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  harvestPrefab: {fileID: 8014917462395333674, guid: e32456cb0d92cd244a9a48e0b0a78663, type: 3}
+  harvestSpawnPositions:
+  - harvestPosition: {fileID: 1752830669}
+    harvestTransform: {fileID: 0}
+  - harvestPosition: {fileID: 339198613}
+    harvestTransform: {fileID: 0}
+  - harvestPosition: {fileID: 524134282}
+    harvestTransform: {fileID: 0}
+  - harvestPosition: {fileID: 1320987163}
+    harvestTransform: {fileID: 0}
+  - harvestPosition: {fileID: 476847022}
+    harvestTransform: {fileID: 0}
+  - harvestPosition: {fileID: 1140395806}
+    harvestTransform: {fileID: 0}
+  - harvestPosition: {fileID: 1399866369}
+    harvestTransform: {fileID: 0}
+  - harvestPosition: {fileID: 1157820443}
+    harvestTransform: {fileID: 0}
+  - harvestPosition: {fileID: 733912730}
+    harvestTransform: {fileID: 0}
+--- !u!114 &514598221
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 514598216}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3caa1df4398ac08479dedd4820f95c58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mineralPrefab: {fileID: 8014917462395333674, guid: 08d2b6a7d90ecb84cb079d6cc596b01c, type: 3}
+  mineralSpawnPositions:
+  - mineralPosition: {fileID: 217831754}
+    mineralTransform: {fileID: 0}
+  - mineralPosition: {fileID: 1773691458}
+    mineralTransform: {fileID: 0}
+  - mineralPosition: {fileID: 1172200970}
+    mineralTransform: {fileID: 0}
+  - mineralPosition: {fileID: 1565541246}
+    mineralTransform: {fileID: 0}
+  - mineralPosition: {fileID: 1592223792}
+    mineralTransform: {fileID: 0}
+  - mineralPosition: {fileID: 2096760350}
+    mineralTransform: {fileID: 0}
+  - mineralPosition: {fileID: 529592543}
+    mineralTransform: {fileID: 0}
+  - mineralPosition: {fileID: 26236043}
+    mineralTransform: {fileID: 0}
+  - mineralPosition: {fileID: 1082934900}
+    mineralTransform: {fileID: 0}
 --- !u!1 &524134281
 GameObject:
   m_ObjectHideFlags: 0
