@@ -34,12 +34,12 @@ public class HarvestSpawnerManager : MonoBehaviour
 
     private void OnEnable()
     {
-        HarvestHandler.OnHarvestCollected += HarvestHandler_OnHarvestCollected;
+        HarvestHandler.OnAnyHarvestCollected += HarvestHandler_OnAnyHarvestCollected;
     }
 
     private void OnDisable()
     {
-        HarvestHandler.OnHarvestCollected -= HarvestHandler_OnHarvestCollected;
+        HarvestHandler.OnAnyHarvestCollected -= HarvestHandler_OnAnyHarvestCollected;
     }
 
     private void Awake()
@@ -145,7 +145,7 @@ public class HarvestSpawnerManager : MonoBehaviour
     private bool TimerOnCooldown() => timer < CalculateTimeToSpawn();
 
     #region HarvestHandler Subscriptions
-    private void HarvestHandler_OnHarvestCollected(object sender, HarvestHandler.OnHarvestEventArgs e)
+    private void HarvestHandler_OnAnyHarvestCollected(object sender, HarvestHandler.OnHarvestEventArgs e)
     {
         DespawnHarvest(e.harvest.GetTransform());
     }

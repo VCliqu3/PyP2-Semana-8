@@ -25,13 +25,13 @@ public class MeatManager : MonoBehaviour
 
     private void OnEnable()
     {
-        MeatHandler.OnMeatCollected += MeatHandler_OnMeatCollected;
+        MeatHandler.OnAnyMeatCollected += MeatHandler_OnAnyMeatCollected;
         Citizen.OnAnyMeatConsumption += Citizen_OnAnyMeatConsumption;
     }
 
     private void OnDisable()
     {
-        MeatHandler.OnMeatCollected -= MeatHandler_OnMeatCollected;
+        MeatHandler.OnAnyMeatCollected -= MeatHandler_OnAnyMeatCollected;
         Citizen.OnAnyMeatConsumption -= Citizen_OnAnyMeatConsumption;
     }
 
@@ -79,7 +79,7 @@ public class MeatManager : MonoBehaviour
     }
 
     #region MeatHandler Subscriptions
-    private void MeatHandler_OnMeatCollected(object sender, MeatHandler.OnMeatEventArgs e)
+    private void MeatHandler_OnAnyMeatCollected(object sender, MeatHandler.OnMeatEventArgs e)
     {
         AddMeat(GameManager.Instance.GameSettings.meatQuantityPerMeat);
     }

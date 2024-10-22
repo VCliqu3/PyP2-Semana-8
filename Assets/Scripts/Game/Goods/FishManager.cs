@@ -25,13 +25,13 @@ public class FishManager : MonoBehaviour
 
     private void OnEnable()
     {
-        FishHandler.OnFishCollected += FishHandler_OnFishCollected;
+        FishHandler.OnAnyFishCollected += FishHandler_OnAnyFishCollected;
         Citizen.OnAnyFishConsumption += Citizen_OnAnyFishConsumption;
     }
 
     private void OnDisable()
     {
-        FishHandler.OnFishCollected -= FishHandler_OnFishCollected;
+        FishHandler.OnAnyFishCollected -= FishHandler_OnAnyFishCollected;
         Citizen.OnAnyFishConsumption -= Citizen_OnAnyFishConsumption;
     }
 
@@ -79,7 +79,7 @@ public class FishManager : MonoBehaviour
     }
 
     #region FishHandler Subscriptions
-    private void FishHandler_OnFishCollected(object sender, FishHandler.OnFishEventArgs e)
+    private void FishHandler_OnAnyFishCollected(object sender, FishHandler.OnFishEventArgs e)
     {
         AddFish(GameManager.Instance.GameSettings.fishQuantityPerFish);
     }

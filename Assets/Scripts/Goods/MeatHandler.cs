@@ -9,7 +9,9 @@ public class MeatHandler : MonoBehaviour, IInteractable
     public event EventHandler OnObjectDeselected;
     public event EventHandler OnObjectInteracted;
 
-    public static event EventHandler<OnMeatEventArgs> OnMeatCollected;
+    public static event EventHandler<OnMeatEventArgs> OnAnyMeatCollected;
+
+    public event EventHandler OnMeatCollected;
 
     public class OnMeatEventArgs : EventArgs
     {
@@ -40,7 +42,8 @@ public class MeatHandler : MonoBehaviour, IInteractable
 
     private void CollectMeat()
     {
-        OnMeatCollected?.Invoke(this, new OnMeatEventArgs { meat = this });
+        OnMeatCollected?.Invoke(this, EventArgs.Empty);
+        OnAnyMeatCollected?.Invoke(this, new OnMeatEventArgs { meat = this });
         Destroy(gameObject);
     }
 }

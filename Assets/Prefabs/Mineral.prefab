@@ -104,6 +104,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2719297768746064057}
+  - component: {fileID: 3530566811936150890}
   m_Layer: 0
   m_Name: Visual
   m_TagString: Untagged
@@ -127,6 +128,22 @@ Transform:
   - {fileID: 7722970930797193713}
   m_Father: {fileID: 8014917462395333674}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3530566811936150890
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2525073159548397491}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4af96cf3edb54c44893e60b542753131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mineralHandler: {fileID: 7300377164773259375}
+  feedbackPrefab: {fileID: 4842289556859963170, guid: efb06b73b52fce74da98d84b06b2389b, type: 3}
+  mineralSprite: {fileID: 21300000, guid: 9e361246115d10a4c95ab564bb0d3d3b, type: 3}
+  offset: {x: 0, y: 1, z: 0}
 --- !u!1001 &7829288435371789850
 PrefabInstance:
   m_ObjectHideFlags: 0

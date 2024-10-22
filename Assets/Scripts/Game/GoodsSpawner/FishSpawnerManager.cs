@@ -35,12 +35,12 @@ public class FishSpawnerManager : MonoBehaviour
 
     private void OnEnable()
     {
-        FishHandler.OnFishCollected += FishHandler_OnFishCollected;
+        FishHandler.OnAnyFishCollected += FishHandler_OnAnyFishCollected;
     }
 
     private void OnDisable()
     {
-        FishHandler.OnFishCollected -= FishHandler_OnFishCollected;
+        FishHandler.OnAnyFishCollected -= FishHandler_OnAnyFishCollected;
     }
     private void Awake()
     {
@@ -145,7 +145,7 @@ public class FishSpawnerManager : MonoBehaviour
     private bool TimerOnCooldown() => timer < CalculateTimeToSpawn();
 
     #region FishHandler Subscriptions
-    private void FishHandler_OnFishCollected(object sender, FishHandler.OnFishEventArgs e)
+    private void FishHandler_OnAnyFishCollected(object sender, FishHandler.OnFishEventArgs e)
     {
         DespawnFish(e.fish.GetTransform());
     }

@@ -9,7 +9,8 @@ public class MineralHandler : MonoBehaviour, IInteractable
     public event EventHandler OnObjectDeselected;
     public event EventHandler OnObjectInteracted;
 
-    public static event EventHandler<OnMineralEventArgs> OnMineralCollected;
+    public static event EventHandler<OnMineralEventArgs> OnAnyMineralCollected;
+    public event EventHandler OnMineralCollected;
 
     public class OnMineralEventArgs : EventArgs
     {
@@ -40,7 +41,8 @@ public class MineralHandler : MonoBehaviour, IInteractable
 
     private void CollectMineral()
     {
-        OnMineralCollected?.Invoke(this, new OnMineralEventArgs { mineral = this });
+        OnMineralCollected?.Invoke(this, EventArgs.Empty);
+        OnAnyMineralCollected?.Invoke(this, new OnMineralEventArgs { mineral = this });
         Destroy(gameObject);
     }
 }

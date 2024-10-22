@@ -27,12 +27,14 @@ public class MineralsManager : MonoBehaviour
 
     private void OnEnable()
     {
-        MineralHandler.OnMineralCollected += MineralHandler_OnMineralCollected;
+        MineralHandler.OnAnyMineralCollected += MineralHandler_OnAnyMineralCollected;
+        CitizensManager.OnCitizenBought += CitizensManager_OnCitizenBought;
     }
 
     private void OnDisable()
     {
-        MineralHandler.OnMineralCollected -= MineralHandler_OnMineralCollected;
+        MineralHandler.OnAnyMineralCollected -= MineralHandler_OnAnyMineralCollected;
+        CitizensManager.OnCitizenBought -= CitizensManager_OnCitizenBought;
     }
 
     private void Awake()
@@ -79,9 +81,16 @@ public class MineralsManager : MonoBehaviour
     }
 
     #region MineralHandler Subscriptions
-    private void MineralHandler_OnMineralCollected(object sender, MineralHandler.OnMineralEventArgs e)
+    private void MineralHandler_OnAnyMineralCollected(object sender, MineralHandler.OnMineralEventArgs e)
     {
         AddMinerals(GameManager.Instance.GameSettings.mineralQuantityPerMineral);
+    }
+    #endregion
+
+    #region CitizensManagerSubscriptions
+    private void CitizensManager_OnCitizenBought(object sender, EventArgs e)
+    {
+        ReduceMinerals(GameManager.Instance.GameSettings.citizenMineralPrice);
     }
     #endregion
 }

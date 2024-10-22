@@ -6,6 +6,7 @@ using UnityEngine;
 public class GameSettingsSO : ScriptableObject
 {
     [Range(0, 10)] public int startingCitizens;
+    [Range(15, 30)] public int citizenMineralPrice;
     [Space]
     [Range(0, 100)] public int startingMeat;
     [Range(0, 100)] public int startingFish;

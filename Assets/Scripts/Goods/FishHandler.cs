@@ -9,7 +9,8 @@ public class FishHandler : MonoBehaviour, IInteractable
     public event EventHandler OnObjectDeselected;
     public event EventHandler OnObjectInteracted;
 
-    public static event EventHandler<OnFishEventArgs> OnFishCollected;
+    public static event EventHandler<OnFishEventArgs> OnAnyFishCollected;
+    public event EventHandler OnFishCollected;
 
     public class OnFishEventArgs : EventArgs
     {
@@ -40,7 +41,8 @@ public class FishHandler : MonoBehaviour, IInteractable
 
     private void CollectFish()
     {
-        OnFishCollected?.Invoke(this, new OnFishEventArgs { fish = this });
+        OnFishCollected?.Invoke(this, EventArgs.Empty);
+        OnAnyFishCollected?.Invoke(this, new OnFishEventArgs { fish = this });
         Destroy(gameObject);
     }
 }

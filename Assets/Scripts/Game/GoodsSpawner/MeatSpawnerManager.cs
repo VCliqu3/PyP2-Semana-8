@@ -35,12 +35,12 @@ public class MeatSpawnerManager : MonoBehaviour
 
     private void OnEnable()
     {
-        MeatHandler.OnMeatCollected += MeatHandler_OnMeatCollected;
+        MeatHandler.OnAnyMeatCollected += MeatHandler_OnAnyMeatCollected;
     }
 
     private void OnDisable()
     {
-        MeatHandler.OnMeatCollected -= MeatHandler_OnMeatCollected;
+        MeatHandler.OnAnyMeatCollected -= MeatHandler_OnAnyMeatCollected;
     }
 
     private void Awake()
@@ -146,7 +146,7 @@ public class MeatSpawnerManager : MonoBehaviour
     private bool TimerOnCooldown() => timer < CalculateTimeToSpawn();
 
     #region MeatHandler Subscriptions
-    private void MeatHandler_OnMeatCollected(object sender, MeatHandler.OnMeatEventArgs e)
+    private void MeatHandler_OnAnyMeatCollected(object sender, MeatHandler.OnMeatEventArgs e)
     {
         DespawnMeat(e.meat.GetTransform());
     }

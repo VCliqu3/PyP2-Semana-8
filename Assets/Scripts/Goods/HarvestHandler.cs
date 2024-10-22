@@ -9,7 +9,8 @@ public class HarvestHandler : MonoBehaviour, IInteractable
     public event EventHandler OnObjectDeselected;
     public event EventHandler OnObjectInteracted;
 
-    public static event EventHandler<OnHarvestEventArgs> OnHarvestCollected;
+    public static event EventHandler<OnHarvestEventArgs> OnAnyHarvestCollected;
+    public event EventHandler OnHarvestCollected;
 
     public class OnHarvestEventArgs : EventArgs
     {
@@ -40,7 +41,8 @@ public class HarvestHandler : MonoBehaviour, IInteractable
 
     private void CollectHarvest()
     {
-        OnHarvestCollected?.Invoke(this, new OnHarvestEventArgs { harvest = this });
+        OnHarvestCollected?.Invoke(this, EventArgs.Empty);
+        OnAnyHarvestCollected?.Invoke(this, new OnHarvestEventArgs { harvest = this });
         Destroy(gameObject);
     }
 }

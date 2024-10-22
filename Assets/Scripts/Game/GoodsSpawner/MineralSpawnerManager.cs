@@ -34,12 +34,12 @@ public class MineralSpawnerManager : MonoBehaviour
 
     private void OnEnable()
     {
-        MineralHandler.OnMineralCollected += MineralHandler_OnMineralCollected;
+        MineralHandler.OnAnyMineralCollected += MineralHandler_OnAnyMineralCollected;
     }
 
     private void OnDisable()
     {
-        MineralHandler.OnMineralCollected -= MineralHandler_OnMineralCollected;
+        MineralHandler.OnAnyMineralCollected -= MineralHandler_OnAnyMineralCollected;
     }
 
     private void Awake()
@@ -145,7 +145,7 @@ public class MineralSpawnerManager : MonoBehaviour
     private bool TimerOnCooldown() => timer < CalculateTimeToSpawn();
 
     #region MineralHandler Subscriptions
-    private void MineralHandler_OnMineralCollected(object sender, MineralHandler.OnMineralEventArgs e)
+    private void MineralHandler_OnAnyMineralCollected(object sender, MineralHandler.OnMineralEventArgs e)
     {
         DespawnMineral(e.mineral.GetTransform());
     }
