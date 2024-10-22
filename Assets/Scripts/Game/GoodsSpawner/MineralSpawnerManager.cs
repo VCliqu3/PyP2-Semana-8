@@ -11,6 +11,9 @@ public class MineralSpawnerManager : MonoBehaviour
     [SerializeField] private Transform mineralPrefab;
     [SerializeField] private List<MineralSpawnPosition> mineralSpawnPositions;
 
+    [Header("Settings")]
+    [SerializeField] private Vector3 spawnOffset;
+
     private float timer = 0f;
 
     public static event EventHandler OnMineralNotSpawned;
@@ -27,6 +30,16 @@ public class MineralSpawnerManager : MonoBehaviour
     public class OnMineralSpawnEventArgs : EventArgs
     {
         public Transform mineralTransform;
+    }
+
+    private void OnEnable()
+    {
+        MineralHandler.OnAnyMineralCollected += MineralHandler_OnAnyMineralCollected;
+    }
+
+    private void OnDisable()
+    {
+        MineralHandler.OnAnyMineralCollected -= MineralHandler_OnAnyMineralCollected;
     }
 
     private void Awake()
@@ -76,15 +89,21 @@ public class MineralSpawnerManager : MonoBehaviour
             return false;
         }
 
-        MineralSpawnPosition chosenSpawnPosition = availablePositions[0];
+        MineralSpawnPosition chosenSpawnPosition = ChooseRandomMineralSpawnPosition(availablePositions);
 
         Transform mineralTransform = Instantiate(mineralPrefab, chosenSpawnPosition.mineralPosition);
-        mineralTransform.localPosition = Vector3.zero;
+        mineralTransform.localPosition = spawnOffset;
 
         chosenSpawnPosition.mineralTransform = mineralTransform;
 
         OnMineralSpawned?.Invoke(this, new OnMineralSpawnEventArgs { mineralTransform = mineralTransform });
         return true;
+    }
+
+    private MineralSpawnPosition ChooseRandomMineralSpawnPosition(List<MineralSpawnPosition> mineralSpawnPositions)
+    {
+        int randomIndex = UnityEngine.Random.Range(0, mineralSpawnPositions.Count);
+        return mineralSpawnPositions[randomIndex];
     }
 
     public bool DespawnMineral(Transform mineralTransform)
@@ -124,4 +143,11 @@ public class MineralSpawnerManager : MonoBehaviour
 
     private void ResetTimer() => timer = 0f;
     private bool TimerOnCooldown() => timer < CalculateTimeToSpawn();
+
+    #region MineralHandler Subscriptions
+    private void MineralHandler_OnAnyMineralCollected(object sender, MineralHandler.OnMineralEventArgs e)
+    {
+        DespawnMineral(e.mineral.GetTransform());
+    }
+    #endregion
 }

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static HarvestSpawnerManager;
 
 public class FishSpawnerManager : MonoBehaviour
 {
@@ -10,6 +11,9 @@ public class FishSpawnerManager : MonoBehaviour
     [Header("Components")]
     [SerializeField] private Transform fishPrefab;
     [SerializeField] private List<FishSpawnPosition> fishSpawnPositions;
+
+    [Header("Settings")]
+    [SerializeField] private Vector3 spawnOffset;
 
     private float timer = 0f;
 
@@ -29,6 +33,15 @@ public class FishSpawnerManager : MonoBehaviour
         public Transform fishTransform;
     }
 
+    private void OnEnable()
+    {
+        FishHandler.OnAnyFishCollected += FishHandler_OnAnyFishCollected;
+    }
+
+    private void OnDisable()
+    {
+        FishHandler.OnAnyFishCollected -= FishHandler_OnAnyFishCollected;
+    }
     private void Awake()
     {
         SetSingleton();
@@ -76,15 +89,21 @@ public class FishSpawnerManager : MonoBehaviour
             return false;
         }
 
-        FishSpawnPosition chosenSpawnPosition = availablePositions[0];
+        FishSpawnPosition chosenSpawnPosition = ChooseRandomFishSpawnPosition(availablePositions);
 
         Transform fishTransform = Instantiate(fishPrefab, chosenSpawnPosition.fishPosition);
-        fishTransform.localPosition = Vector3.zero;
+        fishTransform.localPosition = spawnOffset;
 
         chosenSpawnPosition.fishTransform = fishTransform;
 
         OnFishSpawned?.Invoke(this, new OnFishSpawnEventArgs { fishTransform = fishTransform });
         return true;
+    }
+
+    private FishSpawnPosition ChooseRandomFishSpawnPosition(List<FishSpawnPosition> fishSpawnPositions)
+    {
+        int randomIndex = UnityEngine.Random.Range(0, fishSpawnPositions.Count);
+        return fishSpawnPositions[randomIndex];
     }
 
     public bool DespawnFish(Transform fishTransform)
@@ -124,4 +143,12 @@ public class FishSpawnerManager : MonoBehaviour
 
     private void ResetTimer() => timer = 0f;
     private bool TimerOnCooldown() => timer < CalculateTimeToSpawn();
+
+    #region FishHandler Subscriptions
+    private void FishHandler_OnAnyFishCollected(object sender, FishHandler.OnFishEventArgs e)
+    {
+        DespawnFish(e.fish.GetTransform());
+    }
+
+    #endregion
 }

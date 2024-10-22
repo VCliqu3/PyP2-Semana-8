@@ -16,12 +16,20 @@ public class CitizensManager : MonoBehaviour
     public static event EventHandler<OnCitizenEventArgs> OnCitizenAdded;
     public static event EventHandler<OnCitizenEventArgs> OnCitizenRemoved;
 
+    public static event EventHandler OnCantAffordCitizen;
+    public static event EventHandler<OnCitizenBoughtEventArgs> OnCitizenBought;
+
     public List<Citizen> CitizenList => citizenList;
     public int CitizenCount => citizenList.Count;
 
     public class OnCitizenEventArgs : EventArgs
     {
         public Citizen citizen;
+    }
+
+    public class OnCitizenBoughtEventArgs : EventArgs
+    {
+        public int citizenCount;
     }
 
     private void OnEnable()
@@ -65,15 +73,35 @@ public class CitizensManager : MonoBehaviour
         
         for (int i = 0; i < startingCitizensCount; i++)
         {
-            AddCitizen();
+            AddCitizen(false);
         }
     }
 
-    private void AddCitizen()
+    public void BuyCitizen()
     {
-        bool added = CitizenSpawnerManager.Instance.SpawnCitizen();
+
+        if (!CanAffordCitizen())
+        {
+            OnCantAffordCitizen?.Invoke(this, EventArgs.Empty);
+            return;
+        }
+
+        bool addedCitizen = AddCitizen(true);
+
+        if (!addedCitizen) return;
+
+        OnCitizenBought?.Invoke(this, new OnCitizenBoughtEventArgs { citizenCount = citizenList.Count});
+    }
+
+    private bool CanAffordCitizen() => MineralsManager.Instance.Minerals >= GameManager.Instance.GameSettings.citizenMineralPrice ;
+
+    private bool AddCitizen(bool wasBought)
+    {
+        bool added = CitizenSpawnerManager.Instance.SpawnCitizen(wasBought);
 
         if (!added) OnCitizenNotAdded?.Invoke(this, EventArgs.Empty);
+
+        return added;
     }
 
     private void RemoveCitizen(Citizen citizen)=> CitizenSpawnerManager.Instance.DespawnCitizen(citizen.transform);

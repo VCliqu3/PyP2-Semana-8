@@ -11,6 +11,9 @@ public class HarvestSpawnerManager : MonoBehaviour
     [SerializeField] private Transform harvestPrefab;
     [SerializeField] private List<HarvestSpawnPosition> harvestSpawnPositions;
 
+    [Header("Settings")]
+    [SerializeField] private Vector3 spawnOffset;
+
     private float timer = 0f;
 
     public static event EventHandler OnHarvestNotSpawned;
@@ -27,6 +30,16 @@ public class HarvestSpawnerManager : MonoBehaviour
     public class OnHarvestSpawnEventArgs : EventArgs
     {
         public Transform harvestTransform;
+    }
+
+    private void OnEnable()
+    {
+        HarvestHandler.OnAnyHarvestCollected += HarvestHandler_OnAnyHarvestCollected;
+    }
+
+    private void OnDisable()
+    {
+        HarvestHandler.OnAnyHarvestCollected -= HarvestHandler_OnAnyHarvestCollected;
     }
 
     private void Awake()
@@ -76,15 +89,21 @@ public class HarvestSpawnerManager : MonoBehaviour
             return false;
         }
 
-        HarvestSpawnPosition chosenSpawnPosition = availablePositions[0];
+        HarvestSpawnPosition chosenSpawnPosition = ChooseRandomHarvestSpawnPosition(availablePositions);
 
         Transform harvestTransform = Instantiate(harvestPrefab, chosenSpawnPosition.harvestPosition);
-        harvestTransform.localPosition = Vector3.zero;
+        harvestTransform.localPosition = spawnOffset;
 
         chosenSpawnPosition.harvestTransform = harvestTransform;
 
         OnHarvestSpawned?.Invoke(this, new OnHarvestSpawnEventArgs { harvestTransform = harvestTransform });
         return true;
+    }
+
+    private HarvestSpawnPosition ChooseRandomHarvestSpawnPosition(List<HarvestSpawnPosition> harvestSpawnPositions)
+    {
+        int randomIndex = UnityEngine.Random.Range(0, harvestSpawnPositions.Count);
+        return harvestSpawnPositions[randomIndex];
     }
 
     public bool DespawnHarvest(Transform harvestTransform)
@@ -124,4 +143,12 @@ public class HarvestSpawnerManager : MonoBehaviour
 
     private void ResetTimer() => timer = 0f;
     private bool TimerOnCooldown() => timer < CalculateTimeToSpawn();
+
+    #region HarvestHandler Subscriptions
+    private void HarvestHandler_OnAnyHarvestCollected(object sender, HarvestHandler.OnHarvestEventArgs e)
+    {
+        DespawnHarvest(e.harvest.GetTransform());
+    }
+
+    #endregion
 }

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static FishSpawnerManager;
 
 public class MeatSpawnerManager : MonoBehaviour
 {
@@ -10,6 +11,9 @@ public class MeatSpawnerManager : MonoBehaviour
     [Header("Components")]
     [SerializeField] private Transform meatPrefab;
     [SerializeField] private List<MeatSpawnPosition> meatSpawnPositions;
+
+    [Header("Settings")]
+    [SerializeField] private Vector3 spawnOffset;
 
     private float timer = 0f;
 
@@ -27,6 +31,16 @@ public class MeatSpawnerManager : MonoBehaviour
     public class OnMeatSpawnEventArgs : EventArgs
     {
         public Transform meatTransform;
+    }
+
+    private void OnEnable()
+    {
+        MeatHandler.OnAnyMeatCollected += MeatHandler_OnAnyMeatCollected;
+    }
+
+    private void OnDisable()
+    {
+        MeatHandler.OnAnyMeatCollected -= MeatHandler_OnAnyMeatCollected;
     }
 
     private void Awake()
@@ -76,15 +90,21 @@ public class MeatSpawnerManager : MonoBehaviour
             return false;
         }
 
-        MeatSpawnPosition chosenSpawnPosition = availablePositions[0];
+        MeatSpawnPosition chosenSpawnPosition = ChooseRandomMeatSpawnPosition(availablePositions);
 
         Transform meatTransform = Instantiate(meatPrefab, chosenSpawnPosition.meatPosition);
-        meatTransform.localPosition = Vector3.zero;
+        meatTransform.localPosition = spawnOffset;
 
         chosenSpawnPosition.meatTransform = meatTransform;
 
         OnMeatSpawned?.Invoke(this, new OnMeatSpawnEventArgs { meatTransform = meatTransform });
         return true;
+    }
+
+    private MeatSpawnPosition ChooseRandomMeatSpawnPosition(List<MeatSpawnPosition> meatSpawnPositions)
+    {
+        int randomIndex = UnityEngine.Random.Range(0, meatSpawnPositions.Count);
+        return meatSpawnPositions[randomIndex];
     }
 
     public bool DespawnMeat(Transform meatTransform)
@@ -124,4 +144,11 @@ public class MeatSpawnerManager : MonoBehaviour
 
     private void ResetTimer() => timer = 0f;
     private bool TimerOnCooldown() => timer < CalculateTimeToSpawn();
+
+    #region MeatHandler Subscriptions
+    private void MeatHandler_OnAnyMeatCollected(object sender, MeatHandler.OnMeatEventArgs e)
+    {
+        DespawnMeat(e.meat.GetTransform());
+    }
+    #endregion
 }

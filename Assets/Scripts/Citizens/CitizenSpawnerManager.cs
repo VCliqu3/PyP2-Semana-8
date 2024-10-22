@@ -45,7 +45,7 @@ public class CitizenSpawnerManager : MonoBehaviour
         }
     }
 
-    public bool SpawnCitizen()
+    public bool SpawnCitizen(bool wasBought)
     {
         List<CitizenSpawnPosition> availablePositions = GetAvailableSpawnPositions();
 
@@ -63,6 +63,20 @@ public class CitizenSpawnerManager : MonoBehaviour
         chosenSpawnPosition.citizenTransform = citizenTransform;
 
         OnCitizenSpawned?.Invoke(this, new OnCitizenSpawnEventArgs { citizenTransform = citizenTransform });
+
+        if (wasBought)
+        {
+            Citizen citizen = citizenTransform.GetComponentInChildren<Citizen>();
+
+            if (citizen == null)
+            {
+                Debug.Log("Spawned Citizen does not contain a Citizen component");
+                return true;
+            }
+
+            citizen.SetWasBought();
+        }
+
         return true;
     }
 
