@@ -11,10 +11,10 @@ public class MineralsManager : MonoBehaviour
 
     [Header("Settings")]
     [SerializeField] private int minerals;
-    [SerializeField] private GameSettings gameSettingsSO;
 
     public int Minerals => minerals;
 
+    public static event EventHandler<OnMineralsEventArgs> OnMineralsInitialized;
     public static event EventHandler<OnMineralsEventArgs> OnMineralsIncreased;
     public static event EventHandler<OnMineralsEventArgs> OnMineralsDecreased;
     public static event EventHandler<OnMineralsEventArgs> OnMineralsReachZero;
@@ -59,7 +59,8 @@ public class MineralsManager : MonoBehaviour
 
     private void InitializeVariables()
     {
-        minerals = gameSettingsSO.startingMinerals;
+        minerals = GameManager.Instance.GameSettings.startingMinerals;
+        OnMineralsInitialized?.Invoke(this, new OnMineralsEventArgs { minerals = minerals });
     }
 
     public void AddMinerals(int quantity)

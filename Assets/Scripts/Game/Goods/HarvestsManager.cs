@@ -10,11 +10,11 @@ public class HarvestsManager : MonoBehaviour
 
     [Header("Settings")]
     [SerializeField] private int harvests;
-    [SerializeField] private GameSettings gameSettingsSO;
 
     public int Harvests => harvests;
 
-    public static event EventHandler<OnHarvestsEventArgs> OnHarvestIncreased;
+    public static event EventHandler<OnHarvestsEventArgs> OnHarvestsInitialized;
+    public static event EventHandler<OnHarvestsEventArgs> OnHarvestsIncreased;
     public static event EventHandler<OnHarvestsEventArgs> OnHarvestsDecreased;
     public static event EventHandler<OnHarvestsEventArgs> OnHarvestsReachZero;
 
@@ -58,13 +58,14 @@ public class HarvestsManager : MonoBehaviour
 
     private void InitializeVariables()
     {
-        harvests = gameSettingsSO.startingHarvests;
+        harvests = GameManager.Instance.GameSettings.startingHarvests;
+        OnHarvestsInitialized?.Invoke(this, new OnHarvestsEventArgs { harvests = harvests });   
     }
 
     public void AddHarvests(int quantity)
     {
         harvests += quantity;
-        OnHarvestIncreased?.Invoke(this, new OnHarvestsEventArgs { harvests = harvests });
+        OnHarvestsIncreased?.Invoke(this, new OnHarvestsEventArgs { harvests = harvests });
     }
 
     public void ReduceHarvests(int quantity)

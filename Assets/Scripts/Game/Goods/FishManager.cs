@@ -10,10 +10,10 @@ public class FishManager : MonoBehaviour
 
     [Header("Settings")]
     [SerializeField] private int fish;
-    [SerializeField] private GameSettings gameSettingsSO;
 
     public int Fish => fish;
 
+    public static event EventHandler<OnFishEventArgs> OnFishInitialized;
     public static event EventHandler<OnFishEventArgs> OnFishIncreased;
     public static event EventHandler<OnFishEventArgs> OnFishDecreased;
     public static event EventHandler<OnFishEventArgs> OnFishReachZero;
@@ -58,7 +58,8 @@ public class FishManager : MonoBehaviour
 
     private void InitializeVariables()
     {
-        fish = gameSettingsSO.startingFish;
+        fish = GameManager.Instance.GameSettings.startingFish;
+        OnFishInitialized?.Invoke(this, new OnFishEventArgs { fish = fish });   
     }
 
     public void AddFish(int quantity)
