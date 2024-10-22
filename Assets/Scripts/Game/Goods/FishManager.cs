@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static HarvestsManager;
 
 public class FishManager : MonoBehaviour
 {
@@ -9,10 +10,12 @@ public class FishManager : MonoBehaviour
 
     [Header("Settings")]
     [SerializeField] private int fish;
-    [SerializeField] private GameSettings gameSettingsSO;
 
     public int Fish => fish;
 
+    public static event EventHandler<OnFishEventArgs> OnFishInitialized;
+    public static event EventHandler<OnFishEventArgs> OnFishIncreased;
+    public static event EventHandler<OnFishEventArgs> OnFishDecreased;
     public static event EventHandler<OnFishEventArgs> OnFishReachZero;
 
     public class OnFishEventArgs : EventArgs
@@ -55,14 +58,20 @@ public class FishManager : MonoBehaviour
 
     private void InitializeVariables()
     {
-        fish = gameSettingsSO.startingFish;
+        fish = GameManager.Instance.GameSettings.startingFish;
+        OnFishInitialized?.Invoke(this, new OnFishEventArgs { fish = fish });   
     }
 
-    public void AddFish(int quantity) => fish += quantity;
+    public void AddFish(int quantity)
+    {
+        fish += quantity;
+        OnFishIncreased?.Invoke(this, new OnFishEventArgs { fish = fish });
+    }
 
     public void ReduceFish(int quantity)
     {
         fish = fish - quantity < 0 ? 0 : fish - quantity;
+        OnFishDecreased?.Invoke(this, new OnFishEventArgs { fish = fish });
 
         if (fish <= 0) OnFishReachZero?.Invoke(this, new OnFishEventArgs { fish = fish });
 

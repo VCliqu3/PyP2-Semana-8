@@ -9,10 +9,12 @@ public class MeatManager : MonoBehaviour
 
     [Header("Settings")]
     [SerializeField] private int meat;
-    [SerializeField] private GameSettings gameSettingsSO;
 
     public int Meat => meat;
 
+    public static event EventHandler<OnMeatEventArgs> OnMeatInitialized;
+    public static event EventHandler<OnMeatEventArgs> OnMeatIncreased;
+    public static event EventHandler<OnMeatEventArgs> OnMeatDecreased;
     public static event EventHandler<OnMeatEventArgs> OnMeatReachZero;
 
     public class OnMeatEventArgs : EventArgs
@@ -55,15 +57,21 @@ public class MeatManager : MonoBehaviour
 
     private void InitializeVariables()
     {
-        meat = gameSettingsSO.startingMeat;
+        meat = GameManager.Instance.GameSettings.startingMeat;
+        OnMeatInitialized?.Invoke(this , new OnMeatEventArgs { meat = meat});
     }
 
-    public void AddMeat(int quantity) => meat += quantity;
+    public void AddMeat(int quantity) 
+    {
+        meat += quantity;
+        OnMeatIncreased?.Invoke(this, new OnMeatEventArgs { meat = meat });
+    }
 
     public void ReduceMeat(int quantity)
     {
         meat = meat -quantity <0 ? 0 : meat -quantity;
+        OnMeatDecreased?.Invoke(this, new OnMeatEventArgs { meat = meat });
 
-        if(meat<=0) OnMeatReachZero?.Invoke(this, new OnMeatEventArgs { meat = meat });
+        if (meat<=0) OnMeatReachZero?.Invoke(this, new OnMeatEventArgs { meat = meat });
     }
 }

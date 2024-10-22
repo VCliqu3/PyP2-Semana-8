@@ -17,3 +17,11 @@ MonoBehaviour:
   startingFish: 20
   startingHarvests: 35
   startingMinerals: 25
+  meatProductionPerSecondPerCitizen: 0.05
+  fishProductionPerSecondPerCitizen: 0.025
+  harvestsProductionPerSecondPerCitizen: 0.0368
+  mineralsProductionPerSecondPerCitizen: 0.015
+  meatComsumptionPerSecondPerCitizen: 0.05
+  fishComsumptionPerSecondPerCitizen: 0.05
+  harvestsComsumptionPerSecondPerCitizen: 0.05
+  mineralsComsumptionPerSecondPerCitizen: 0.05
