@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerClick : MonoBehaviour
 {
@@ -24,6 +25,23 @@ public class PlayerClick : MonoBehaviour
     private void Update()
     {
         HandleInteractableSelections();
+        HandleInteractions();
+    }
+
+    private void HandleInteractions()
+    {
+        if (currentInteractable == null) return;
+
+        HandleDownInteractions(currentInteractable);
+    }
+
+    private void HandleDownInteractions(IInteractable interactable)
+    {
+        if (InputManager.Instance.GetInteractionInputDown())
+        {
+            interactable.Interact();
+        }
+
     }
 
     private void HandleInteractableSelections()

@@ -13,7 +13,26 @@ MonoBehaviour:
   m_Name: GameSettings
   m_EditorClassIdentifier: 
   startingCitizens: 3
-  startingMeat: 30
-  startingFish: 20
-  startingHarvests: 35
-  startingMinerals: 25
+  citizenMineralPrice: 15
+  startingMeat: 40
+  startingFish: 50
+  startingHarvests: 45
+  startingMinerals: 20
+  meatQuantityPerMeat: 1
+  fishQuantityPerFish: 1
+  harvestQuantityPerHarvest: 1
+  mineralQuantityPerMineral: 1
+  meatProductionPerSecondPerCitizen: 0.15
+  fishProductionPerSecondPerCitizen: 0.1114
+  harvestsProductionPerSecondPerCitizen: 0.1335
+  mineralsProductionPerSecondPerCitizen: 0.0681
+  citizenMinConsumptionTime: 15
+  citizenMaxConsumptionTime: 30
+  meatConsumptionOdds: 1
+  fishConsumptionOdds: 0.665
+  harvestConsumptionOdds: 0.837
+  minCitizenConsumptionQuantity: 1
+  maxCitizenConsumptionQuantity: 3
+  meatToWin: 150
+  fishToWin: 150
+  harvestToWin: 150
